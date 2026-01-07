@@ -1,0 +1,13 @@
+{
+  "name": "weareout-figma-sync",
+  "version": "1.0.0",
+  "description": "Figma design sync service for WeAreOut",
+  "type": "module",
+  "main": "figma-client.js",
+  "scripts": {
+    "test": "node test-connection.js",
+    "sync": "node sync-designs.js"
+  },
+  "author": "",
+  "license": "MIT"
+}

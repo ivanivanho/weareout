@@ -1,0 +1,17 @@
+{
+  "name": "weareout-agents-build",
+  "version": "1.0.0",
+  "description": "AI Agent team for building WeAreOut iOS app",
+  "type": "module",
+  "main": "phase1-kickoff.js",
+  "scripts": {
+    "phase1": "node phase1-kickoff.js",
+    "demo": "node phase1-kickoff.js"
+  },
+  "keywords": ["agents", "weareout", "ios", "build-automation"],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "uuid": "^9.0.1"
+  }
+}

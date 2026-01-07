@@ -1,0 +1,106 @@
+{
+  "project": "WeAreOut iOS App",
+  "version": "1.0.0",
+  "lastSync": null,
+  "components": {
+    "Button/Primary": {
+      "codePath": "mobile/src/components/Button.tsx",
+      "figmaComponentId": null,
+      "variant": "primary"
+    },
+    "Button/Secondary": {
+      "codePath": "mobile/src/components/Button.tsx",
+      "figmaComponentId": null,
+      "variant": "secondary"
+    },
+    "Button/Outline": {
+      "codePath": "mobile/src/components/Button.tsx",
+      "figmaComponentId": null,
+      "variant": "outline"
+    },
+    "Input/Text": {
+      "codePath": "mobile/src/components/Input.tsx",
+      "figmaComponentId": null,
+      "variant": "text"
+    },
+    "Input/Email": {
+      "codePath": "mobile/src/components/Input.tsx",
+      "figmaComponentId": null,
+      "variant": "email"
+    },
+    "Input/Password": {
+      "codePath": "mobile/src/components/Input.tsx",
+      "figmaComponentId": null,
+      "variant": "password"
+    },
+    "Card/Item": {
+      "codePath": "mobile/src/components/ItemCard.tsx",
+      "figmaComponentId": null
+    },
+    "Card/Dashboard": {
+      "codePath": "mobile/src/components/DashboardCard.tsx",
+      "figmaComponentId": null
+    }
+  },
+  "screens": {
+    "Auth/Login": {
+      "codePath": "mobile/src/screens/auth/LoginScreen.tsx",
+      "figmaFrameId": null,
+      "status": "implemented"
+    },
+    "Auth/Register": {
+      "codePath": "mobile/src/screens/auth/RegisterScreen.tsx",
+      "figmaFrameId": null,
+      "status": "implemented"
+    },
+    "Dashboard/Main": {
+      "codePath": "mobile/src/screens/DashboardScreen.tsx",
+      "figmaFrameId": null,
+      "status": "pending"
+    },
+    "Inventory/List": {
+      "codePath": "mobile/src/screens/InventoryListScreen.tsx",
+      "figmaFrameId": null,
+      "status": "pending"
+    },
+    "Inventory/Detail": {
+      "codePath": "mobile/src/screens/ItemDetailScreen.tsx",
+      "figmaFrameId": null,
+      "status": "pending"
+    },
+    "Inventory/Add": {
+      "codePath": "mobile/src/screens/AddItemScreen.tsx",
+      "figmaFrameId": null,
+      "status": "pending"
+    },
+    "Camera/Scan": {
+      "codePath": "mobile/src/screens/CameraScanScreen.tsx",
+      "figmaFrameId": null,
+      "status": "pending"
+    },
+    "Settings/Main": {
+      "codePath": "mobile/src/screens/SettingsScreen.tsx",
+      "figmaFrameId": null,
+      "status": "pending"
+    }
+  },
+  "designTokens": {
+    "colors": {
+      "figmaStyleIds": {},
+      "codePath": "mobile/src/theme/colors.ts"
+    },
+    "typography": {
+      "figmaStyleIds": {},
+      "codePath": "mobile/src/theme/typography.ts"
+    },
+    "spacing": {
+      "figmaVariableIds": {},
+      "codePath": "mobile/src/theme/spacing.ts"
+    }
+  },
+  "notes": [
+    "Figma component IDs will be populated after MCP server is connected",
+    "Update 'figmaComponentId' and 'figmaFrameId' with actual IDs from Figma",
+    "Status values: 'pending', 'in-progress', 'implemented', 'needs-update'"
+  ]
+}
