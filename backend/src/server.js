@@ -20,6 +20,9 @@ import express from 'express';
 import cors from 'cors';
 import { testConnection, closePool } from './config/database.js';
 import authRoutes from './routes/auth.js';
+import inventoryRoutes from './routes/inventory.js';
+import shoppingListRoutes from './routes/shoppingList.js';
+import aiRoutes from './routes/ai.js';
 
 // Initialize Express app
 const app = express();
@@ -124,6 +127,9 @@ app.get('/', (req, res) => {
  * API Routes
  */
 app.use('/api/auth', authRoutes);
+app.use('/api/inventory', inventoryRoutes);
+app.use('/api/shopping-list', shoppingListRoutes);
+app.use('/api/ai', aiRoutes);
 
 /**
  * 404 Not Found Handler

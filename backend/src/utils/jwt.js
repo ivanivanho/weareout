@@ -118,6 +118,9 @@ export async function generateRefreshToken(user, metadata = {}, client = null) {
     // Store refresh token in database
     if (client) {
       // Use transaction client if provided
+      // Normalize IP address - convert "unknown" to null
+      const ipAddress = metadata.ipAddress && metadata.ipAddress !== 'unknown' ? metadata.ipAddress : null;
+
       await client.query(
         `INSERT INTO refresh_tokens (user_id, token_hash, device_info, ip_address, expires_at)
          VALUES ($1, $2, $3, $4, $5)`,
@@ -125,11 +128,14 @@ export async function generateRefreshToken(user, metadata = {}, client = null) {
           user.id,
           tokenHash,
           metadata.deviceInfo || null,
-          metadata.ipAddress || null,
+          ipAddress,
           expiresAt,
         ]
       );
     } else {
+      // Normalize IP address - convert "unknown" to null
+      const ipAddress = metadata.ipAddress && metadata.ipAddress !== 'unknown' ? metadata.ipAddress : null;
+
       // Use pool query if no client provided
       await query(
         `INSERT INTO refresh_tokens (user_id, token_hash, device_info, ip_address, expires_at)
@@ -138,7 +144,7 @@ export async function generateRefreshToken(user, metadata = {}, client = null) {
           user.id,
           tokenHash,
           metadata.deviceInfo || null,
-          metadata.ipAddress || null,
+          ipAddress,
           expiresAt,
         ]
       );

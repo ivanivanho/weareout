@@ -214,7 +214,7 @@ export async function login(req, res) {
     // Fetch user from database
     const userResult = await query(
       `SELECT id, email, password_hash, full_name, is_active, is_verified,
-              failed_login_attempts, locked_until
+              failed_login_attempts, account_locked_until as locked_until
        FROM users WHERE email = $1`,
       [email.toLowerCase().trim()]
     );
@@ -255,15 +255,15 @@ export async function login(req, res) {
     if (!isPasswordValid) {
       // Increment failed login attempts
       const failedAttempts = (user.failed_login_attempts || 0) + 1;
-      const lockDuration = failedAttempts >= 5 ? 15 : null; // Lock for 15 minutes after 5 attempts
+      const lockUntil = failedAttempts >= 5 ? new Date(Date.now() + 15 * 60 * 1000) : null; // Lock for 15 minutes after 5 attempts
 
       await query(
         `UPDATE users
          SET failed_login_attempts = $1,
-             locked_until = CASE WHEN $2 IS NOT NULL THEN NOW() + INTERVAL '$2 minutes' ELSE NULL END,
-             last_login_attempt = NOW()
+             account_locked_until = $2,
+             last_failed_login = NOW()
          WHERE id = $3`,
-        [failedAttempts, lockDuration, user.id]
+        [failedAttempts, lockUntil, user.id]
       );
 
       if (failedAttempts >= 5) {
@@ -286,9 +286,8 @@ export async function login(req, res) {
     await query(
       `UPDATE users
        SET failed_login_attempts = 0,
-           locked_until = NULL,
-           last_login = NOW(),
-           last_login_attempt = NOW()
+           account_locked_until = NULL,
+           last_login_at = NOW()
        WHERE id = $1`,
       [user.id]
     );
