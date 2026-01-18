@@ -69,6 +69,9 @@ export const AIResultPreviewScreen: React.FC = () => {
       let successCount = 0;
       let failCount = 0;
 
+      // Get all current inventory items to find matches
+      const inventoryItems = await inventoryApi.getInventoryItems();
+
       for (const item of result.items) {
         try {
           if (result.action === 'add') {
@@ -81,15 +84,55 @@ export const AIResultPreviewScreen: React.FC = () => {
             });
             successCount++;
           } else if (result.action === 'remove') {
-            // For "out of" scenarios, we would update existing items to quantity 0
-            // This requires fetching the item first or having an endpoint to mark as out
-            // For MVP, we'll show a message
-            console.log(`Would mark ${item.name} as out`);
-            successCount++;
+            // Find existing item by name (case-insensitive)
+            const existingItem = inventoryItems.find(
+              (inv) => inv.name.toLowerCase() === item.name.toLowerCase()
+            );
+
+            if (existingItem) {
+              // Update existing item to quantity 0
+              await inventoryApi.updateInventoryItem(existingItem.id, {
+                quantity: 0,
+              });
+              console.log(`✅ Marked ${item.name} as out of stock`);
+              successCount++;
+            } else {
+              // Create new item with quantity 0
+              await inventoryApi.createInventoryItem({
+                name: item.name,
+                quantity: 0,
+                unit: item.unit || 'units',
+                category: item.category || 'Uncategorized',
+                location: 'Kitchen',
+              });
+              console.log(`✅ Created ${item.name} with quantity 0`);
+              successCount++;
+            }
           } else if (result.action === 'update') {
-            // Similar to remove, would need to update existing items
-            console.log(`Would update ${item.name} quantity`);
-            successCount++;
+            // Find existing item by name (case-insensitive)
+            const existingItem = inventoryItems.find(
+              (inv) => inv.name.toLowerCase() === item.name.toLowerCase()
+            );
+
+            if (existingItem) {
+              // Update existing item quantity
+              await inventoryApi.updateInventoryItem(existingItem.id, {
+                quantity: item.quantity,
+              });
+              console.log(`✅ Updated ${item.name} quantity to ${item.quantity}`);
+              successCount++;
+            } else {
+              // Create new item if it doesn't exist
+              await inventoryApi.createInventoryItem({
+                name: item.name,
+                quantity: item.quantity,
+                unit: item.unit,
+                category: item.category,
+                location: 'Kitchen',
+              });
+              console.log(`✅ Created ${item.name} with quantity ${item.quantity}`);
+              successCount++;
+            }
           }
         } catch (error) {
           console.error(`Failed to save ${item.name}:`, error);
